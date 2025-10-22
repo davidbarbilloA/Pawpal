@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>PawPal - Crear Mascota</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="styles/form_steps.css"> 
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="PawPal Logo">
+                </a>
+                <nav class="main-menu">
+                    <a href="#">Trabajo para Cuidadores</a>
+                    <a href="#">Centro de Ayuda</a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <div class="ubicacion">
+                    <span class="location-icon">
+                        <img src="img/colombia.png" alt="bandera colombia">
+                    </span>
+                    <span class="location-text">Medellín</span>
+                </div>
+                <div class="auth-bottons">
+                    <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
+                    <a href="registro.html" class="btn btn-signup">Regístrate</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main-content-form">
+        <div class="form-container">
+            <h1 class="form-title">Registro de Nueva Mascota 🐾</h1>
+            
+            <div class="step-indicator">
+                <span class="step active" data-step="1">1. Datos Básicos</span>
+                <span class="step" data-step="2">2. Fotos</span>
+                <span class="step" data-step="3">3. Salud</span>
+                <span class="step" data-step="4">4. Cuidados</span>
+                <span class="step" data-step="5">5. Confirmación</span>
+            </div>
+
+            <form id="pet-creation-form">
+                
+                <section class="form-step active" data-step="1">
+                    <h2>Datos Obligatorios <span class="required-note">(*Campos requeridos)</span></h2>
+                    
+                    <label for="pet-name">Nombre *</label>
+                    <input type="text" id="pet-name" name="nombre" required placeholder="Ej: Max, Luna">
+                    
+                    <label for="species">Especie *</label>
+                    <select id="species" name="especie" required>
+                        <option value="">Selecciona una especie</option>
+                        <option value="perro">Perro</option>
+                        <option value="gato">Gato</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                    
+                    <label for="breed">Raza *</label>
+                    <input type="text" id="breed" name="raza" required placeholder="Ej: Labrador, Siames">
+                    
+                    <label for="birthdate">Fecha de Nacimiento o Edad</label>
+                    <input type="date" id="birthdate" name="fecha_nacimiento">
+                    
+                    <label for="weight">Peso (kg)</label>
+                    <input type="number" id="weight" name="peso" step="0.1" placeholder="Ej: 5.5">
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-next" data-next-step="2">Siguiente</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="2">
+                    <h2>Carga de Fotos 📸</h2>
+                    <p>Sube entre **1 y 10 fotos** para el perfil de tu mascota.</p>
+                    
+                    <label for="pet-photos" class="btn btn-upload">Seleccionar Fotos (Mín. 1) <span id="photo-count">(0/10)</span></label>
+                    <input type="file" id="pet-photos" name="fotos" accept="image/*" multiple style="display: none;">
+                    
+                    <div id="photo-preview-grid" class="photo-grid">
+                        <div class="photo-placeholder main-photo-placeholder">
+                            <span class="placeholder-text">Foto Principal</span>
+                        </div>
+                    </div>
+                    
+                    <p class="validation-error" id="photo-error" style="color: red; display: none;">Debe subir entre 1 y 10 fotos.</p>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev-step="1">Anterior</button>
+                        <button type="button" class="btn btn-next" data-next-step="3" id="btn-next-step2">Siguiente</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="3">
+                    <h2>Historial Clínico/Salud ⚕️</h2>
+                    <p>Añade información relevante sobre la salud actual y pasada de tu mascota.</p>
+                    
+                    <label for="current-health">Estado de Salud Actual</label>
+                    <textarea id="current-health" name="estado_salud" placeholder="¿Está sana? ¿Tiene alguna condición crónica?"></textarea>
+                    
+                    <div class="health-records-container">
+                        <h3>Registros Clínicos</h3>
+                        <div id="historial-salud-list">
+                            <p class="no-records">No hay registros aún.</p>
+                        </div>
+                        <button type="button" class="btn btn-add-record" id="add-health-record">
+                            + Añadir Visita al Veterinario
+                        </button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev-step="2">Anterior</button>
+                        <button type="button" class="btn btn-next" data-next-step="4">Siguiente</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="4">
+                    <h2>Cuidados Especiales ✨</h2>
+                    <p>Indica cualquier necesidad o cuidado extra que deba conocer un cuidador.</p>
+                    
+                    <label for="special-cares">Notas sobre Cuidados Especiales</label>
+                    <textarea id="special-cares" name="cuidados_especiales" placeholder="Ej: Dieta especial, requiere medicamento a las 8 AM, sensible a ruidos fuertes..."></textarea>
+                    
+                    <label for="medication">Medicamentos Frecuentes</label>
+                    <input type="text" id="medication" name="medicamentos" placeholder="Ej: Insulina, Pastilla para la tiroides">
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev-step="3">Anterior</button>
+                        <button type="button" class="btn btn-next" data-next-step="5">Revisar Perfil</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="5">
+                    <h2>Vista Previa y Confirmación ✅</h2>
+                    <p>Revisa la información antes de crear el perfil.</p>
+                    
+                    <div id="profile-summary">
+                        <h3>Resumen del Perfil:</h3>
+                        <p>...Cargando Resumen...</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev-step="4">Anterior</button>
+                        <button type="submit" class="btn btn-submit">Crear Perfil de Mascota</button>
+                    </div>
+                </section>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-columns">
+                <div class="footer-col footer-col-info">
+                    <div class="logo-footer">
+                        <img src="img/logo.png" alt="PawPal Logo" class="footer-logo-img">
+                    </div>
+                    <p class="slogan-text">
+                        Conectando mascotas con los mejores <br>
+                        cuidadores en Medellín.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4 class="col-title">Para Dueños</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Buscar Cuidadores</a></li>
+                        <li><a href="#">Cómo Funciona</a></li>
+                        <li><a href="#">Precios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="col-title">Para Cuidadores</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Conviérte en Cuidador</a></li>
+                        <li><a href="#">Requisitos</a></li>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">
+                    &copy; 2025 PawPal Medellín | Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/crear_mascota.js"></script>
+</body>
+</html>

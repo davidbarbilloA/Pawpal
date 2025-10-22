@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>PawPal</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+
+</head>
+<body>
+<!-- Encabezado -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <img src="img/logo.png" alt="PawPal Logo">
+                </a>
+
+                <nav class="main-menu">
+                    <a href="#">Trabajo para Cuidadores</a>
+                    <a href="#">Centro de Ayuda</a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+            <div class="ubicacion">
+                <span class="location-icon">
+                    <img src="img/colombia.png" alt="bandera colombia">
+                </span>
+                <span class="location-text">Medellín</span>
+            </div>
+            <div class="auth-bottons">
+                <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-signup">Regístrate</a>
+            </div>
+        </div>
+        </div>
+    </header>
+<!-- Inicio -->
+    <div class="section">
+        <h1 class="main-heading">
+            Encuentra 
+            <span class="highlight">cuidadores de mascotas disponibles</span>
+            cerca de ti en Medellín
+        </h1>
+
+        <p class="subtext">
+            Conecta con cuidadores profesionales y confiables en tu zona
+        </p>
+    </div>
+
+<!-- Seleccion de cuidadores -->
+<!-- al conectarse a una BD esto deberia de cambiarse de forma automatica dependiendo los cuidadores registrados -->
+    <section class="cuidadores-section">
+        <div class="cuidadores-header">
+            <h2 class="section-title">4 Cuidadores disponibles</h2>
+            <div class="header-filters">
+                <button class="filter-button">Mejor valorados</button>
+                <button class="map-button">Ver en el mapa</button>
+            </div>
+        </div>
+
+        <div class="cuidadores-content-wrapper">
+            <div class="cuidadores-list">
+
+                <article class="cuidador-card">
+                    <div class="card-image-container">
+                        <img src="img/cuidador1.jpeg" alt="Foto cuidador 1" class="cuidador-photo">
+                    </div>
+                    <div class="card-info">
+                        <div class="info-header">
+                            <h3 class="cuidador-name">Jose Peréz</h3>
+                            <span class="cuidador-price">COP 70.000</span>
+                        </div>
+                        <span class="service-type">Cuidador de Mascota a Domicilio</span>
+
+                        <div class="rating-info">
+                            <span class="distance">1.74 km</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-value">5.0</span>
+                            <span class="reviews">(127 reseñas)</span>
+                        </div>
+
+                        <p class="descripcion">Amante de los animales con 8 años de experiencia. Especializado en perros y gatos de todas las edades.</p>
+                        <div class="service-tags">
+                            <span class="tag">Cuidador a domicilio</span>
+                            <span class="tag">Paseos</span>
+                            <span class="tag">Alimentación</span>
+                        </div>
+
+                        <div class="stats-footer">
+                            <span class="stat">245 reservas</span>
+                            <span class="stat">89 clientes repiten</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="cuidador-card">
+                    <div class="card-image-container">
+                        <img src="img/cuidador2.jpeg" alt="Foto cuidador 2" class="cuidador-photo">
+                    </div>
+                    <div class="card-info">
+                        <div class="info-header">
+                            <h3 class="cuidador-name">Valentina Castro</h3>
+                            <span class="cuidador-price">COP 55.000</span>
+                        </div>
+                        <span class="service-type">Cuidado de Gatos</span>
+
+                        <div class="rating-info">
+                            <span class="distance">2.8 km</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-value">5.0</span>
+                            <span class="reviews">(145 reseñas)</span>
+                        </div>
+
+                        <p class="descripcion">Especialista en felinos. Entiendo perfectamente las necesidades de los gatos.</p>
+                        <div class="service-tags">
+                            <span class="tag">Cuidado de gatos</span>
+                            <span class="tag">Limpieza de cajas</span>
+                            <span class="tag">Juegos felinos</span>
+                        </div>
+
+                        <div class="stats-footer">
+                            <span class="stat">267 reservas</span>
+                            <span class="stat">187 clientes repiten</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="cuidador-card">
+                    <div class="card-image-container">
+                        <img src="img/cuidador3.jpeg" alt="Foto cuidador 3" class="cuidador-photo">
+                    </div>
+                    <div class="card-info">
+                        <div class="info-header">
+                            <h3 class="cuidador-name">Andrés López</h3>
+                            <span class="cuidador-price">COP 65.000</span>
+                        </div>
+                        <span class="service-type">Paseador de Perros Certificado</span>
+
+                        <div class="rating-info">
+                            <span class="distance">0.5 km</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-value">4.9</span>
+                            <span class="reviews">(85 reseñas)</span>
+                        </div>
+
+                        <p class="descripcion">Manejo de grupos y obediencia básica. ¡Perros felices garantizados!</p>
+                        <div class="service-tags">
+                            <span class="tag">Paseos largos</span>
+                            <span class="tag">Adistramiento</span>
+                            <span class="tag">Transporte</span>
+                        </div>
+
+                        <div class="stats-footer">
+                            <span class="stat">150 reservas</span>
+                            <span class="stat">50 clientes repiten</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="cuidador-card">
+                    <div class="card-image-container">
+                        <img src="img/cuidador4.jpeg" alt="Foto cuidador 4" class="cuidador-photo">
+                    </div>
+                    <div class="card-info">
+                        <div class="info-header">
+                            <h3 class="cuidador-name">Luisa Pérez</h3>
+                            <span class="cuidador-price">COP 45.000</span>
+                        </div>
+                        <span class="service-type">Cuidadora de Animales Pequeños</span>
+
+                        <div class="rating-info">
+                            <span class="distance">3.2 km</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-value">5.0</span>
+                            <span class="reviews">(20 reseñas)</span>
+                        </div>
+
+                        <p class="descripcion">Especializada en conejos, hámsters y aves. Cuidado en mi propio hogar.</p>
+                        <div class="service-tags">
+                            <span class="tag">Anamles exóticos</span>
+                            <span class="tag">Cuidado en casa</span>
+                            <span class="tag">Jaulas grandes</span>
+                        </div>
+
+                        <div class="stats-footer">
+                            <span class="stat">55 reservas</span>
+                            <span class="stat">12 clientes repiten</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Por qué reservar con nosotros</h3>
+
+                <ul class="benefits-list">
+                    <li class="benefit-item">
+                        <span class="icon">✓</span>
+                        <div class="benefit-text">
+                            <p class="main-text">Protección premium gratuita</p>
+                            <p class="sub-text">Para tu mascota</p>
+                        </div>
+                    </li>
+
+                    <li class="benefit-item">
+                        <span class="icon">✓</span>
+                        <div class="benefit-text">
+                            <p class="main-text">Protección de pagos</p>
+                            <p class="sub-text">Transacciones seguras</p>
+                        </div>
+                    </li>
+
+                    <li class="benefit-item highlight">
+                        <span class="icon">⚠️</span>
+                        <div class="benefit-text">
+                            <p class="main-text">Proceso de cancelacion fácil</p>
+                            <p class="sub-text">Sin complicaciones</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="recent-activity">
+                    <p class="activity-title">Actividad reciente</p>
+                    <p class="activity-detail">Jose ha sido reservado hace 5 minutos en el poblado</p>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+
+            <div class="footer-columns">
+
+                <div class="footer-col footer-col-info">
+                    <div class="logo-footer">
+                        <img src="img/logo.png" alt="PawPal Logo" class="footer-logo-img">
+                    </div>
+                    <p class="slogan-text">
+                        Conectando mascotas con los mejores <br>
+                        cuidadores en Medellín.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Dueños</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Buscar Cuidadores</a></li>
+                        <li><a href="#">Cómo Funciona</a></li>
+                        <li><a href="#">Precios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Cuidadores</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Conviérte en Cuidador</a></li>
+                        <li><a href="#">Requisitos</a></li>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">
+                    &copy; 2025 PawPal Medellín | Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

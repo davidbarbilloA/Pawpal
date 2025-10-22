@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>PawPal</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+</head>
+<body>
+<!-- Encabezado -->
+    <header class="main-header">
+        <div class="headerReg">
+            <div class="headerReg">
+                <a href="index.html" class="logo"><img src="img/logo.png" alt="PawPal Logo"></a>
+                <!-- <nav class="main-menu">
+                    <a href="#">Trabajo para Cuidadores</a>
+                    <a href="#">Centro de Ayuda</a>
+                </nav> -->
+            </div>           
+            <div class="header-right">
+            <div class="ubicacion">
+                <span class="location-icon">
+                    <img src="img/colombia.png" alt="bandera colombia">
+                </span>
+                <span class="location-text">Medellín</span>
+            </div>
+            <div class="auth-bottons">
+                <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-signup">Regístrate</a>
+            </div>
+        </div>
+        </div>
+    </header>
+    <section>
+    <form action="#" method="post" class="formReg">
+        <h2 class="h2Reg">Registro de Usuario</h2>
+
+        <label for="nombre" class="LabelReg">Nombre(s):</label>
+        <input type="text" class="InputReg" id="nombre" name="nombre" required>
+
+        <label for="apellido" class="LabelReg">Apellido(s):</label>
+        <input type="text" class="InputReg" id="apellido" name="apellido" required>
+
+        <label for="telefono" class="LabelReg">Número telefónico:</label>
+        <input type="tel" class="InputReg" id="telefono" name="telefono" pattern="[0-9]{10}" required placeholder="Ej: 3001234567">
+
+        <label for="ciudad" class="LabelReg">Ciudad:</label>
+        <input type="text" class="InputReg" id="ciudad" name="ciudad" required>
+
+        <label for="email" class="LabelReg">Correo electrónico:</label>
+        <input type="email" class="InputReg" id="email" name="email" required>
+
+        <label for="password" class="LabelReg">Contraseña:</label>
+        <input type="password" class="InputReg" id="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."><br><br>
+        <button type="submit" class="ButtonReg">Registrarse</button>
+        </form>
+    </section>
+
+    
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+
+            <div class="footer-columns">
+
+                <div class="footer-col footer-col-info">
+                    <div class="logo-footer">
+                        <img src="img/logo.png" alt="PawPal Logo" class="footer-logo-img">
+                    </div>
+                    <p class="slogan-text">
+                        Conectando mascotas con los mejores <br>
+                        cuidadores en Medellín.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Dueños</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Buscar Cuidadores</a></li>
+                        <li><a href="#">Cómo Funciona</a></li>
+                        <li><a href="#">Precios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Cuidadores</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Conviérte en Cuidador</a></li>
+                        <li><a href="#">Requisitos</a></li>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">
+                    &copy; 2025 PawPal Medellín | Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
