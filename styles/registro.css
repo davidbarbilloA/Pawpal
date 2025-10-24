@@ -49,6 +49,7 @@ body {
     margin-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
+    
 }
 
 .form-group label {
@@ -69,17 +70,24 @@ body {
 }
 
 .register-button {
-    width: 100%;
+    width: 25%;
     background-color: var(--botton-background-color);
     color: var(--white-color);
     border: none;
-    padding: .9rem;
+    padding: 1.2rem;
     border-radius: 6px;
     font-weight: 600;
+    font-size: 13px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
 }
 
 .register-button:hover {
     background-color: var(--primary-color);
+}
+
+.form-group-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
