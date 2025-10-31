@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>Portal PQR - Admin</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/pqr.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+</head>
+<body>
+<!-- Encabezado -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="PawPal Logo">
+                </a>
+
+                <nav class="main-menu">
+                    <a href="#">Trabajo para Cuidadores</a>
+                    <a href="#">Centro de Ayuda</a>
+                </nav>
+            </div>
+
+            <div class="header-right">
+            <div class="ubicacion">
+                <span class="location-icon">
+                    <img src="img/colombia.png" alt="bandera colombia">
+                </span>
+                <span class="location-text">Medellín</span>
+            </div>
+            <div class="auth-bottons">
+                <button class="btn btn-logout" id="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+            <div id="welcome-message" style="display: none; text-align: right; margin-left: 1rem; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">
+                <!-- Mensaje de bienvenida se mostrará aquí -->
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <main class="pqr-main">
+        <section class="pqr-section">
+            <h1 class="pqr-title">Portal de PQR</h1>
+            <p class="pqr-subtitle">Solo para administradores</p>
+
+            <section class="filtros">
+                <input type="text" id="buscarUsuario" placeholder="Buscar por nombre de usuario..." class="filtro-input">
+                <select id="filtrarEstado" class="filtro-select">
+                    <option value="todos">Todos</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="revision">Revisión</option>
+                    <option value="resuelto">Resuelto</option>
+                </select>
+            </section>
+
+            <section class="tabla-pqr">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N° Caso</th>
+                            <th>Usuario</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPQR">
+                        <!-- Se llenará dinámicamente con JS -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+
+            <div class="footer-columns">
+
+                <div class="footer-col footer-col-info">
+                    <div class="logo-footer">
+                        <img src="img/logo.png" alt="PawPal Logo" class="footer-logo-img">
+                    </div>
+                    <p class="slogan-text">
+                        Conectando mascotas con los mejores <br>
+                        cuidadores en Medellín.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Dueños</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Buscar Cuidadores</a></li>
+                        <li><a href="#">Cómo Funciona</a></li>
+                        <li><a href="#">Precios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="col-title">Para Cuidadores</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Conviérte en Cuidador</a></li>
+                        <li><a href="#">Requisitos</a></li>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">
+                    &copy; 2025 PawPal Medellín | Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/pqr.js"></script>
+</body>
+</html>
