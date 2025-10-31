@@ -35,16 +35,25 @@
                 <span class="location-text">Medellín</span>
             </div>
             <div class="auth-bottons">
-                <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
-                <a href="registro.html" class="btn btn-signup">Regístrate</a>
+                <a href="login.html" class="btn btn-login" id="login-btn">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-signup" id="register-btn">Regístrate</a>
+                <button class="btn btn-logout" id="logout-btn" style="display: none;" onclick="logout()">Cerrar Sesión</button>
+                <!-- Enlace al portal de PQR (solo visible para admin) -->
+                <div id="admin-section" style="display: none;">
+                    <a href="pqr.html" class="btn btn-admin">Portal de PQR</a>
+                </div>
+            </div>
+            <div id="welcome-message" style="display: none; text-align: right; margin-left: 1rem; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">
+                <!-- Mensaje de bienvenida se mostrará aquí -->
             </div>
         </div>
         </div>
     </header>
 <!-- Inicio -->
     <div class="section">
+
         <h1 class="main-heading">
-            Encuentra 
+            Encuentra
             <span class="highlight">cuidadores de mascotas disponibles</span>
             cerca de ti en Medellín
         </h1>
@@ -271,5 +280,7 @@
             </div>
         </div>
     </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

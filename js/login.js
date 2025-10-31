@@ -20,7 +20,30 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 🔒 Simulación temporal (sin backend)
+    // 🔒 Simulación temporal (sin backend) - Credenciales de admin
+    const adminCredentials = {
+      email: "admin@pawpal.com",
+      password: "admin123",
+      phone: "+573001234567"
+    };
+
+    let userRole = "user"; // Por defecto usuario normal
+
+    // Verificar si es admin
+    if ((identifier === adminCredentials.email || identifier === adminCredentials.phone) && password === adminCredentials.password) {
+      userRole = "admin";
+    }
+
+    // Guardar usuario actual en localStorage
+    const usuarioActual = {
+      identifier: identifier,
+      rol: userRole,
+      loginTime: new Date().toISOString()
+    };
+
+    localStorage.setItem("usuarioActual", JSON.stringify(usuarioActual));
+
+    // Mostrar mensaje de éxito sin el rol
     alert(`Inicio de sesión exitoso como ${identifier}`);
     window.location.href = "index.html";
   });
