@@ -19,7 +19,7 @@
 
 html {
     box-sizing: border-box;
-    font-size: 120.5%; 
+    font-size: 62.5%; 
 }
 
 *, *:before, *:after {
@@ -71,7 +71,7 @@ body {
 }
 
 .logo img{
-    height: 12rem;
+    height: 10rem;
     width: auto;
     display: block;
 }

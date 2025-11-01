@@ -1,128 +1,146 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Elementos principales del DOM
-    const profileTbody = document.getElementById('profiles-tbody');
-    const detailView = document.getElementById('detail-view');
-    const profileListSection = document.getElementById('profile-list-section');
-    const rejectModal = document.getElementById('reject-modal');
-    const statusFilter = document.getElementById('status-filter');
-    
-    let currentProfileId = null;
+    class Cuidador {
+        constructor(id, name, regDate, status, personal, experience, references) {
+            this.id = id;
+            this.name = name;
+            this.regDate = regDate;
+            this.status = status;
+            this.personal = personal;
+            this.experience = experience;
+            this.references = references;
+        }
+    }
 
-    // --- Datos de Prueba (Simulando la carga desde una API) ---
-    const cuidadores = [
-        { id: 101, name: "María López", regDate: "2025-10-25", status: "pending", personal: "35 años, vive en El Poblado.", experience: "5 años de experiencia, certificada en primeros auxilios.", references: "Dos referencias de clientes satisfechos." },
-        { id: 102, name: "Juan Pérez", regDate: "2025-10-20", status: "pending", personal: "28 años, vive en Laureles.", experience: "2 años de experiencia, sin certificación adicional.", references: "Una referencia (pendiente de verificación)." },
-        { id: 103, name: "Sofía Gómez", regDate: "2025-10-18", status: "approved", personal: "40 años, vive en Envigado.", experience: "10 años de experiencia, certificado de adiestramiento.", references: "Tres referencias verificadas." },
-    ];
-    
-    // --- FUNCIÓN DE RENDERIZADO DE LA TABLA ---
-    function renderTable(filter = 'pending') {
-        profileTbody.innerHTML = '';
-        const filteredCuidadores = cuidadores.filter(p => filter === 'all' || p.status === filter);
-
-        if (filteredCuidadores.length === 0) {
-            profileTbody.innerHTML = `<tr><td colspan="5" class="loading-message">No hay perfiles ${filter.toUpperCase()} para mostrar.</td></tr>`;
-            return;
+    class CuidadorManager {
+        constructor() {
+            this.cuidadores = [
+                new Cuidador(101, "María López", "2025-10-25", "pending", "35 años, vive en El Poblado.", "5 años de experiencia, certificada en primeros auxilios.", "Dos referencias de clientes satisfechos."),
+                new Cuidador(102, "Juan Pérez", "2025-10-20", "pending", "28 años, vive en Laureles.", "2 años de experiencia, sin certificación adicional.", "Una referencia (pendiente de verificación)."),
+                new Cuidador(103, "Sofía Gómez", "2025-10-18", "approved", "40 años, vive en Envigado.", "10 años de experiencia, certificado de adiestramiento.", "Tres referencias verificadas.")
+            ];
         }
 
-        filteredCuidadores.forEach(profile => {
-            const row = profileTbody.insertRow();
-            row.dataset.id = profile.id;
+        filtrarPorEstado(estado) {
+            if (estado === 'all') return this.cuidadores;
+            return this.cuidadores.filter(c => c.status === estado);
+        }
 
-            const statusClass = `status-${profile.status}`;
-            const statusText = profile.status.charAt(0).toUpperCase() + profile.status.slice(1);
+        actualizarEstado(id, nuevoEstado, razon = null) {
+            const cuidador = this.cuidadores.find(c => c.id === id);
+            if (cuidador) {
+                cuidador.status = nuevoEstado;
+                // Aquí podrías agregar una llamada a API para guardar cambios o enviar notificación
+            }
+        }
 
-            row.innerHTML = `
-                <td>${profile.id}</td>
-                <td>${profile.name}</td>
-                <td>${profile.regDate}</td>
-                <td class="${statusClass}">${statusText}</td>
-                <td><button class="btn btn-secondary view-btn" data-id="${profile.id}">Ver Detalle</button></td>
-            `;
+        obtenerPorId(id) {
+            return this.cuidadores.find(c => c.id === id);
+        }
+    }
 
-            // Agregar listener al botón "Ver Detalle"
-            row.querySelector('.view-btn').addEventListener('click', () => {
-                showDetailView(profile);
+    class UIManager {
+        constructor(manager) {
+            // Elementos del DOM
+            this.manager = manager;
+            this.profileTbody = document.getElementById('profiles-tbody');
+            this.detailView = document.getElementById('detail-view');
+            this.profileListSection = document.getElementById('profile-list-section');
+            this.rejectModal = document.getElementById('reject-modal');
+            this.statusFilter = document.getElementById('status-filter');
+            this.currentProfileId = null;
+
+            // Inicialización de eventos
+            this.initEventListeners();
+            this.renderizarTabla('pending');
+        }
+
+        renderizarTabla(filtro = 'pending') {
+            const perfiles = this.manager.filtrarPorEstado(filtro);
+            this.profileTbody.innerHTML = '';
+
+            if (perfiles.length === 0) {
+                this.profileTbody.innerHTML = `<tr><td colspan="5" class="loading-message">No hay perfiles ${filtro.toUpperCase()} para mostrar.</td></tr>`;
+                return;
+            }
+
+            perfiles.forEach(perfil => {
+                const row = this.profileTbody.insertRow();
+                const estadoTexto = perfil.status.charAt(0).toUpperCase() + perfil.status.slice(1);
+                const estadoClase = `status-${perfil.status}`;
+
+                row.innerHTML = `
+                    <td>${perfil.id}</td>
+                    <td>${perfil.name}</td>
+                    <td>${perfil.regDate}</td>
+                    <td class="${estadoClase}">${estadoTexto}</td>
+                    <td><button class="btn btn-secondary view-btn" data-id="${perfil.id}">Ver Detalle</button></td>
+                `;
+
+                row.querySelector('.view-btn').addEventListener('click', () => this.mostrarDetalle(perfil));
             });
-        });
-    }
-
-    // --- FUNCIÓN PARA MOSTRAR LA VISTA DETALLADA ---
-    function showDetailView(profile) {
-        currentProfileId = profile.id;
-        
-        // Llenar los datos
-        document.getElementById('detail-name').textContent = `Perfil de: ${profile.name}`;
-        document.getElementById('detail-personal').textContent = profile.personal;
-        document.getElementById('detail-experience').textContent = profile.experience;
-        document.getElementById('detail-references').textContent = profile.references;
-
-        // Mostrar/Ocultar secciones
-        profileListSection.classList.add('hidden');
-        detailView.classList.remove('hidden');
-    }
-
-    // --- MANEJO DE EVENTOS DE INTERFAZ ---
-
-    // 1. Filtrado de Tabla
-    statusFilter.addEventListener('change', (e) => {
-        renderTable(e.target.value);
-    });
-
-    // 2. Volver a la Lista
-    document.getElementById('back-to-list').addEventListener('click', () => {
-        detailView.classList.add('hidden');
-        profileListSection.classList.remove('hidden');
-        currentProfileId = null;
-    });
-
-    // 3. Botón APROBAR
-    document.getElementById('approve-btn').addEventListener('click', () => {
-        if (currentProfileId) {
-            updateProfileStatus(currentProfileId, 'approved');
-            alert(`Perfil ID ${currentProfileId} aprobado y publicado.`);
-            document.getElementById('back-to-list').click(); // Volver a la lista
-        }
-    });
-
-    // 4. Botón RECHAZAR (Muestra Modal)
-    document.getElementById('reject-btn').addEventListener('click', () => {
-        rejectModal.classList.remove('hidden');
-    });
-
-    // 5. Botón CANCELAR Modal
-    document.getElementById('modal-cancel-btn').addEventListener('click', () => {
-        rejectModal.classList.add('hidden');
-    });
-
-    // 6. Botón ENVIAR RECHAZO (Lógica de rechazo)
-    document.getElementById('modal-send-btn').addEventListener('click', () => {
-        const reason = document.getElementById('rejection-reason').value.trim();
-        if (!reason) {
-            alert('Por favor, ingresa un motivo para el rechazo.');
-            return;
         }
 
-        if (currentProfileId) {
-            updateProfileStatus(currentProfileId, 'rejected', reason);
-            alert(`Perfil ID ${currentProfileId} rechazado. Motivo enviado: "${reason}"`);
-            rejectModal.classList.add('hidden');
-            document.getElementById('back-to-list').click(); // Volver a la lista
-        }
-    });
+        mostrarDetalle(perfil) {
+            this.currentProfileId = perfil.id;
+            document.getElementById('detail-name').textContent = `Perfil de: ${perfil.name}`;
+            document.getElementById('detail-personal').textContent = perfil.personal;
+            document.getElementById('detail-experience').textContent = perfil.experience;
+            document.getElementById('detail-references').textContent = perfil.references;
 
-    // --- FUNCIÓN DE ACTUALIZACIÓN DE ESTADO (Simulada) ---
-    function updateProfileStatus(id, newStatus, reason = null) {
-        const profileIndex = cuidadores.findIndex(p => p.id === id);
-        if (profileIndex !== -1) {
-            cuidadores[profileIndex].status = newStatus;
-            // Aquí iría la llamada a la API para guardar el cambio y enviar la notificación
-            
-            // Re-renderizar la tabla para actualizar la vista
-            renderTable(statusFilter.value);
+            this.profileListSection.classList.add('hidden');
+            this.detailView.classList.remove('hidden');
+        }
+
+        volverALista() {
+            this.detailView.classList.add('hidden');
+            this.profileListSection.classList.remove('hidden');
+            this.currentProfileId = null;
+        }
+
+        aprobarPerfil() {
+            if (this.currentProfileId) {
+                this.manager.actualizarEstado(this.currentProfileId, 'approved');
+                alert(`Perfil ID ${this.currentProfileId} aprobado y publicado.`);
+                this.volverALista();
+                this.renderizarTabla(this.statusFilter.value);
+            }
+        }
+
+        mostrarModalRechazo() {
+            this.rejectModal.classList.remove('hidden');
+        }
+
+        ocultarModalRechazo() {
+            this.rejectModal.classList.add('hidden');
+        }
+
+        enviarRechazo() {
+            const razon = document.getElementById('rejection-reason').value.trim();
+            if (!razon) {
+                alert('Por favor, ingresa un motivo para el rechazo.');
+                return;
+            }
+
+            if (this.currentProfileId) {
+                this.manager.actualizarEstado(this.currentProfileId, 'rejected', razon);
+                alert(`Perfil ID ${this.currentProfileId} rechazado. Motivo: "${razon}"`);
+                this.ocultarModalRechazo();
+                this.volverALista();
+                this.renderizarTabla(this.statusFilter.value);
+            }
+        }
+
+        initEventListeners() {
+            this.statusFilter.addEventListener('change', (e) => this.renderizarTabla(e.target.value));
+            document.getElementById('back-to-list').addEventListener('click', () => this.volverALista());
+            document.getElementById('approve-btn').addEventListener('click', () => this.aprobarPerfil());
+            document.getElementById('reject-btn').addEventListener('click', () => this.mostrarModalRechazo());
+            document.getElementById('modal-cancel-btn').addEventListener('click', () => this.ocultarModalRechazo());
+            document.getElementById('modal-send-btn').addEventListener('click', () => this.enviarRechazo());
         }
     }
-    
-    // Iniciar: Renderizar la tabla al cargar la página (por defecto, solo pendientes)
-    renderTable('pending');
+
+    // --- Inicializar la aplicación ---
+    const manager = new CuidadorManager();
+    new UIManager(manager);
 });

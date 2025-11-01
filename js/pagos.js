@@ -1,32 +1,90 @@
-document.getElementById("paymentForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+/*****************************************************
+ * 💳 PAWPAL - FORMULARIO DE PAGOS (POO)
+ * Manejo del formulario, validación y almacenamiento
+ *****************************************************/
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const monto = document.getElementById("monto").value.trim();
-    const metodo = document.getElementById("metodo").value;
-    const mensaje = document.getElementById("mensaje");
+class Pago {
+  constructor(nombre, monto, metodo) {
+    this.nombre = nombre;
+    this.monto = monto;
+    this.metodo = metodo;
+    this.fecha = new Date().toLocaleString();
+  }
+}
 
-    if (!nombre || !monto || !metodo) {
-        mensaje.textContent = "❌ Por favor, completa todos los campos.";
-        mensaje.style.color = "red";
-        return;
-    }
+class PagoManager {
+  constructor(storageKey = "pagos") {
+    this.storageKey = storageKey;
+    this.pagos = this.cargarPagos();
+  }
 
-    mensaje.textContent = "✅ Pago procesado correctamente.";
-    mensaje.style.color = "#2e7d32";
+  cargarPagos() {
+    return JSON.parse(localStorage.getItem(this.storageKey)) || [];
+  }
 
-    // Guardar temporalmente en localStorage
-    const pago = {
-        nombre,
-        monto,
-        metodo,
-        fecha: new Date().toLocaleString()
+  guardarPagos() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.pagos));
+  }
+
+  agregarPago(pago) {
+    this.pagos.push(pago);
+    this.guardarPagos();
+  }
+}
+
+class PagoUI {
+  constructor(formId) {
+    this.form = document.getElementById(formId);
+    this.mensaje = document.getElementById("mensaje");
+    this.manager = new PagoManager();
+
+    this.inicializarEventos();
+  }
+
+  inicializarEventos() {
+    this.form.addEventListener("submit", (e) => this.procesarFormulario(e));
+  }
+
+  obtenerDatos() {
+    return {
+      nombre: document.getElementById("nombre").value.trim(),
+      monto: document.getElementById("monto").value.trim(),
+      metodo: document.getElementById("metodo").value
     };
+  }
 
-    let pagos = JSON.parse(localStorage.getItem("pagos")) || [];
-    pagos.push(pago);
-    localStorage.setItem("pagos", JSON.stringify(pagos));
+  validarDatos({ nombre, monto, metodo }) {
+    if (!nombre || !monto || !metodo) {
+      this.mostrarMensaje("❌ Por favor, completa todos los campos.", "red");
+      return false;
+    }
+    return true;
+  }
 
-    // Limpiar el formulario
-    document.getElementById("paymentForm").reset();
+  mostrarMensaje(texto, color) {
+    this.mensaje.textContent = texto;
+    this.mensaje.style.color = color;
+  }
+
+  limpiarFormulario() {
+    this.form.reset();
+  }
+
+  procesarFormulario(e) {
+    e.preventDefault();
+    const datos = this.obtenerDatos();
+
+    if (!this.validarDatos(datos)) return;
+
+    const nuevoPago = new Pago(datos.nombre, datos.monto, datos.metodo);
+    this.manager.agregarPago(nuevoPago);
+
+    this.mostrarMensaje("✅ Pago procesado correctamente.", "#2e7d32");
+    this.limpiarFormulario();
+  }
+}
+
+// ======== Inicialización ========
+document.addEventListener("DOMContentLoaded", () => {
+  new PagoUI("paymentForm");
 });

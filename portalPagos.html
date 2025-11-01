@@ -15,31 +15,47 @@
 
 <body>
     <!-- Encabezado -->
-    <header class="main-header">
-        <div class="header-content">
-            <div class="header-left">
-                <a href="#" class="logo">
-                    <img src="img/logo.png" alt="PawPal Logo">
-                </a>
-                <nav class="main-menu">
-                    <a href="#">Trabajo para Cuidadores</a>
-                    <a href="#">Centro de Ayuda</a>
-                </nav>
-            </div>
-            <div class="header-right">
-                <div class="ubicacion">
-                    <span class="location-icon">
-                        <img src="img/colombia.png" alt="bandera colombia">
-                    </span>
-                    <span class="location-text">Medellín</span>
-                </div>
-                <div class="auth-bottons">
-                    <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
-                    <a href="registro.html" class="btn btn-signup">Regístrate</a>
-                </div>
-            </div>
+      <header class="main-header">
+  <div class="header-content">
+    <div class="header-left">
+      <a href="#" class="logo">
+        <img src="img/logo.png" alt="PawPal Logo">
+      </a>
+
+      <nav class="main-menu">
+        <a href="#">Trabajo para Cuidadores</a>
+        <a href="#">Centro de Ayuda</a>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <div class="ubicacion">
+        <span class="location-icon">
+          <img src="img/colombia.png" alt="bandera colombia">
+        </span>
+        <span class="location-text">Medellín</span>
+      </div>
+
+      <div class="auth-bottons">
+        <!-- Enlace visible para todos los usuarios -->
+        <a href="portalPagos.html" class="btn btn-payment" id="portal-pagos-btn" style="display: none;">Portal de Pagos</a>
+
+        <!-- Enlace al portal de PQR (solo visible para admin) -->
+        <div id="admin-section" style="display: none;">
+          <a href="pqr.html" class="btn btn-admin">Portal de PQR</a>
         </div>
-    </header>
+
+        <!-- Botón de cierre de sesión (solo visible cuando hay sesión) -->
+        <button class="btn btn-logout" id="logout-btn" style="display: none;" onclick="logout()">Cerrar Sesión</button>
+
+        <!-- Mensaje de bienvenida -->
+        <div id="welcome-message"
+          style="display: none; text-align: right; margin-left: 1rem; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
     <!-- Contenido principal -->
     <main class="payment-section">

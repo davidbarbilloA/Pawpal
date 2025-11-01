@@ -1,16 +1,38 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const tablaBody = document.querySelector("#tablaPagos tbody");
-    const botonBorrar = document.getElementById("borrarPagos");
+class Pago {
+    constructor(nombre, monto, metodo, fecha) {
+        this.nombre = nombre;
+        this.monto = monto;
+        this.metodo = metodo;
+        this.fecha = fecha;
+    }
+}
 
-    // Cargar pagos desde localStorage
-    const pagos = JSON.parse(localStorage.getItem("pagos")) || [];
+class GestorPagos {
+    constructor(tablaSelector, botonBorrarSelector) {
+        this.tablaBody = document.querySelector(`${tablaSelector} tbody`);
+        this.botonBorrar = document.querySelector(botonBorrarSelector);
+        this.pagos = this.cargarPagos();
+        this.inicializar();
+    }
 
-    if (pagos.length === 0) {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `<td colspan="4">No hay pagos registrados.</td>`;
-        tablaBody.appendChild(fila);
-    } else {
-        pagos.forEach(pago => {
+    cargarPagos() {
+        return JSON.parse(localStorage.getItem("pagos")) || [];
+    }
+
+    guardarPagos() {
+        localStorage.setItem("pagos", JSON.stringify(this.pagos));
+    }
+
+    mostrarPagos() {
+        this.tablaBody.innerHTML = ""; // Limpia tabla
+        if (this.pagos.length === 0) {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `<td colspan="4">No hay pagos registrados.</td>`;
+            this.tablaBody.appendChild(fila);
+            return;
+        }
+
+        this.pagos.forEach(pago => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${pago.nombre}</td>
@@ -18,15 +40,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${pago.metodo}</td>
                 <td>${pago.fecha}</td>
             `;
-            tablaBody.appendChild(fila);
+            this.tablaBody.appendChild(fila);
         });
     }
 
-    // Borrar todos los pagos
-    botonBorrar.addEventListener("click", () => {
+    borrarPagos() {
         if (confirm("¿Seguro que deseas borrar todos los pagos guardados?")) {
             localStorage.removeItem("pagos");
-            location.reload();
+            this.pagos = [];
+            this.mostrarPagos();
         }
-    });
+    }
+
+    inicializar() {
+        this.mostrarPagos();
+        this.botonBorrar.addEventListener("click", () => this.borrarPagos());
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    new GestorPagos("#tablaPagos", "#borrarPagos");
 });

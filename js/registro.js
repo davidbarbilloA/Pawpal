@@ -1,120 +1,192 @@
-document.addEventListener("DOMContentLoaded", () => {
-const form = document.querySelector(".registration-form");
+/*****************************************************
+ * 🐾 PAWPAL - REGISTRO DE USUARIOS CON POO (FULL)
+ * Incluye frontend (formulario) + backend (servidor)
+ *****************************************************/
 
-form.addEventListener("submit", async (e) => {
-e.preventDefault(); // Evita el envío tradicional
+// ==========================
+// 🌐 BACKEND (Node.js + Express + MySQL)
+// ==========================
+if (typeof require !== "undefined" && typeof module !== "undefined") {
+  const express = require("express");
+  const cors = require("cors");
+  const mysql = require("mysql2");
 
-// Captura los datos del formulario
-const formData = {
-    nombres: form.querySelector("#nombres").value,
-    apellidos: form.querySelector("#apellidos").value,
-    telefono: form.querySelector("#telefono").value,
-    emergencia_nombre: form.querySelector("#nombre_emergencia").value,
-    emergencia_apellido: form.querySelector("#apellido_emergencia").value,
-    emergencia_telefono: form.querySelector("#telefono_emergencia").value,
-    ciudad: form.querySelector("#ciudad").value,
-    correo: form.querySelector("#correo").value,
-    contrasena: form.querySelector("#contrasena").value,
-    confirmar: form.querySelector("#confirmar").value,
-};
+  class Database {
+    constructor(config) {
+      this.connection = mysql.createConnection(config);
+    }
 
-// Validación básica
-if (formData.contrasena !== formData.confirmar) {
-    alert("Las contraseñas no coinciden.");
-    return;
+    conectar() {
+      this.connection.connect((err) => {
+        if (err) throw err;
+        console.log("✅ Conectado a la base de datos 🐾");
+      });
+    }
+
+    ejecutar(query, params = []) {
+      return new Promise((resolve, reject) => {
+        this.connection.query(query, params, (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        });
+      });
+    }
+  }
+
+  class Servidor {
+    constructor() {
+      this.app = express();
+      this.port = 3000;
+      this.db = new Database({
+        host: "localhost",
+        user: "tu_usuario",
+        password: "tu_contraseña",
+        database: "pawpal_db",
+      });
+
+      this.configurarMiddlewares();
+      this.definirRutas();
+    }
+
+    configurarMiddlewares() {
+      this.app.use(cors());
+      this.app.use(express.json());
+    }
+
+    definirRutas() {
+      this.app.post("/api/registro", async (req, res) => {
+        try {
+          const {
+            nombres,
+            apellidos,
+            telefono,
+            emergencia_nombre,
+            emergencia_apellido,
+            emergencia_telefono,
+            ciudad,
+            correo,
+            contrasena,
+          } = req.body;
+
+          const sql = `
+            INSERT INTO usuarios 
+            (nombres, apellidos, telefono, emergencia_nombre, emergencia_apellido, emergencia_telefono, ciudad, correo, contrasena)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `;
+
+          await this.db.ejecutar(sql, [
+            nombres,
+            apellidos,
+            telefono,
+            emergencia_nombre,
+            emergencia_apellido,
+            emergencia_telefono,
+            ciudad,
+            correo,
+            contrasena,
+          ]);
+
+          res.status(200).json({ message: "Usuario registrado correctamente 🐶" });
+        } catch (error) {
+          console.error("❌ Error al insertar:", error);
+          res.status(500).json({ message: "Error al registrar usuario" });
+        }
+      });
+    }
+
+    iniciar() {
+      this.db.conectar();
+      this.app.listen(this.port, () =>
+        console.log(`🚀 Servidor corriendo en http://localhost:${this.port}`)
+      );
+    }
+  }
+
+  // Descomenta esta línea si quieres que el servidor se inicie directamente:
+  // new Servidor().iniciar();
 }
 
-try {
-    const response = await fetch("http://localhost:3000/api/registro", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
+// ==========================
+// 💻 FRONTEND (Formulario en HTML con Fetch)
+// ==========================
+
+class RegistroAPI {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
+  }
+
+  async registrar(datos) {
+    const response = await fetch(this.baseURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
     });
 
     const result = await response.json();
-    if (response.ok) {
-    alert("Registro exitoso 🎉");
-    form.reset();
-    } else {
-    alert("Error: " + result.message);
-    }
-} catch (error) {
-    console.error("Error al enviar datos:", error);
-    alert("Hubo un problema al registrar. Intenta más tarde.");
+    if (!response.ok) throw new Error(result.message || "Error al registrar");
+    return result;
+  }
 }
-});
-});
 
-// Backend con Node.js + Express 
-/*
-// archivo: server.js
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql2");
+class RegistroForm {
+  constructor(selector) {
+    this.form = document.querySelector(selector);
+    if (!this.form) return;
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+    this.api = new RegistroAPI("http://localhost:3000/api/registro");
+    this.inicializarEventos();
+  }
 
-// Conexión a la base de datos
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "tu_usuario",
-  password: "tu_contraseña",
-  database: "pawpal_db",
-});
+  inicializarEventos() {
+    this.form.addEventListener("submit", (e) => this.handleSubmit(e));
+  }
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Conectado a la base de datos 🐾");
-});
+  obtenerDatos() {
+    return {
+      nombres: this.form.querySelector("#nombres").value.trim(),
+      apellidos: this.form.querySelector("#apellidos").value.trim(),
+      telefono: this.form.querySelector("#telefono").value.trim(),
+      emergencia_nombre: this.form.querySelector("#nombre_emergencia").value.trim(),
+      emergencia_apellido: this.form.querySelector("#apellido_emergencia").value.trim(),
+      emergencia_telefono: this.form.querySelector("#telefono_emergencia").value.trim(),
+      ciudad: this.form.querySelector("#ciudad").value.trim(),
+      correo: this.form.querySelector("#correo").value.trim(),
+      contrasena: this.form.querySelector("#contrasena").value.trim(),
+      confirmar: this.form.querySelector("#confirmar").value.trim(),
+    };
+  }
 
-// Ruta para recibir el registro
-app.post("/api/registro", (req, res) => {
-  const {
-    nombres,
-    apellidos,
-    telefono,
-    emergencia_nombre,
-    emergencia_apellido,
-    emergencia_telefono,
-    ciudad,
-    correo,
-    contrasena,
-  } = req.body;
-
-  const sql = `INSERT INTO usuarios 
-    (nombres, apellidos, telefono, emergencia_nombre, emergencia_apellido, emergencia_telefono, ciudad, correo, contrasena) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-  db.query(
-    sql,
-    [
-      nombres,
-      apellidos,
-      telefono,
-      emergencia_nombre,
-      emergencia_apellido,
-      emergencia_telefono,
-      ciudad,
-      correo,
-      contrasena,
-    ],
-    (err, result) => {
-      if (err) {
-        console.error("Error al insertar:", err);
-        res.status(500).json({ message: "Error al registrar usuario" });
-      } else {
-        res.status(200).json({ message: "Usuario registrado correctamente" });
-      }
+  validarDatos(datos) {
+    if (datos.contrasena !== datos.confirmar) {
+      alert("❌ Las contraseñas no coinciden.");
+      return false;
     }
-  );
-});
+    if (!datos.correo.includes("@")) {
+      alert("❌ El correo no es válido.");
+      return false;
+    }
+    return true;
+  }
 
-app.listen(3000, () => {
-  console.log("Servidor corriendo en http://localhost:3000");
-});
+  async handleSubmit(e) {
+    e.preventDefault();
+    const datos = this.obtenerDatos();
+    if (!this.validarDatos(datos)) return;
 
-*/
+    try {
+      const result = await this.api.registrar(datos);
+      alert("✅ Registro exitoso: " + result.message);
+      this.form.reset();
+    } catch (error) {
+      console.error("Error al registrar:", error);
+      alert("⚠️ Hubo un problema al registrar. Intenta más tarde.");
+    }
+  }
+}
+
+// Inicializar solo si hay DOM disponible (navegador)
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", () => {
+    new RegistroForm(".registration-form");
+  });
+}
