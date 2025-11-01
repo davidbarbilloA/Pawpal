@@ -1,192 +1,129 @@
-/*****************************************************
- * 🐾 PAWPAL - REGISTRO DE USUARIOS CON POO (FULL)
- * Incluye frontend (formulario) + backend (servidor)
- *****************************************************/
-
-// ==========================
-// 🌐 BACKEND (Node.js + Express + MySQL)
-// ==========================
-if (typeof require !== "undefined" && typeof module !== "undefined") {
-  const express = require("express");
-  const cors = require("cors");
-  const mysql = require("mysql2");
-
-  class Database {
-    constructor(config) {
-      this.connection = mysql.createConnection(config);
-    }
-
-    conectar() {
-      this.connection.connect((err) => {
-        if (err) throw err;
-        console.log("✅ Conectado a la base de datos 🐾");
-      });
-    }
-
-    ejecutar(query, params = []) {
-      return new Promise((resolve, reject) => {
-        this.connection.query(query, params, (err, result) => {
-          if (err) reject(err);
-          else resolve(result);
-        });
-      });
-    }
-  }
-
-  class Servidor {
-    constructor() {
-      this.app = express();
-      this.port = 3000;
-      this.db = new Database({
-        host: "localhost",
-        user: "tu_usuario",
-        password: "tu_contraseña",
-        database: "pawpal_db",
-      });
-
-      this.configurarMiddlewares();
-      this.definirRutas();
-    }
-
-    configurarMiddlewares() {
-      this.app.use(cors());
-      this.app.use(express.json());
-    }
-
-    definirRutas() {
-      this.app.post("/api/registro", async (req, res) => {
-        try {
-          const {
-            nombres,
-            apellidos,
-            telefono,
-            emergencia_nombre,
-            emergencia_apellido,
-            emergencia_telefono,
-            ciudad,
-            correo,
-            contrasena,
-          } = req.body;
-
-          const sql = `
-            INSERT INTO usuarios 
-            (nombres, apellidos, telefono, emergencia_nombre, emergencia_apellido, emergencia_telefono, ciudad, correo, contrasena)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-          `;
-
-          await this.db.ejecutar(sql, [
-            nombres,
-            apellidos,
-            telefono,
-            emergencia_nombre,
-            emergencia_apellido,
-            emergencia_telefono,
-            ciudad,
-            correo,
-            contrasena,
-          ]);
-
-          res.status(200).json({ message: "Usuario registrado correctamente 🐶" });
-        } catch (error) {
-          console.error("❌ Error al insertar:", error);
-          res.status(500).json({ message: "Error al registrar usuario" });
+/**
+ * Clase que gestiona el proceso de registro de usuarios utilizando localStorage.
+ */
+class RegistrationManager {
+    constructor(formSelector, redirectPage) {
+        // Inicializa las propiedades de la clase
+        this.form = document.querySelector(formSelector);
+        this.redirectPage = redirectPage; // 'login.html'
+        
+        if (this.form) {
+            this.init();
+        } else {
+            console.error("No se encontró el formulario de registro con el selector: " + formSelector);
         }
-      });
     }
 
-    iniciar() {
-      this.db.conectar();
-      this.app.listen(this.port, () =>
-        console.log(`🚀 Servidor corriendo en http://localhost:${this.port}`)
-      );
+    /**
+     * Inicializa los listeners de eventos.
+     */
+    init() {
+        // Usamos una función flecha para mantener el contexto 'this' (la instancia de la clase)
+        this.form.addEventListener("submit", (e) => this.handleSubmit(e));
     }
-  }
 
-  // Descomenta esta línea si quieres que el servidor se inicie directamente:
-  // new Servidor().iniciar();
+    /**
+     * Captura los datos del formulario y los devuelve como un objeto.
+     * @returns {Object} Objeto con los datos del formulario.
+     */
+    getFormData() {
+        return {
+            nombres: this.form.querySelector("#nombres").value.trim(),
+            apellidos: this.form.querySelector("#apellidos").value.trim(),
+            telefono: this.form.querySelector("#telefono").value.trim(),
+            emergencia_nombre: this.form.querySelector("#nombre_emergencia").value.trim(),
+            emergencia_apellido: this.form.querySelector("#apellido_emergencia").value.trim(),
+            emergencia_telefono: this.form.querySelector("#telefono_emergencia").value.trim(),
+            ciudad: this.form.querySelector("#ciudad").value.trim(),
+            correo: this.form.querySelector("#correo").value.trim(),
+            contrasena: this.form.querySelector("#contrasena").value,
+            confirmar: this.form.querySelector("#confirmar").value,
+        };
+    }
+
+    /**
+     * Valida la coincidencia de contraseñas.
+     * @param {Object} formData - Datos del formulario.
+     * @returns {boolean} True si las contraseñas coinciden.
+     */
+    validatePasswords(formData) {
+        if (formData.contrasena !== formData.confirmar) {
+            alert("Las contraseñas no coinciden.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Intenta guardar el usuario en localStorage.
+     * @param {Object} formData - Datos del formulario.
+     * @returns {boolean} True si el registro fue exitoso.
+     */
+    saveUserToLocalStorage(formData) {
+        try {
+            // 1. Obtener usuarios existentes
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // 2. Verificar si el correo ya existe
+            const userExists = users.some(user => user.correo === formData.correo);
+            if (userExists) {
+                alert("Error: El correo electrónico ya está registrado.");
+                return false;
+            }
+
+            // 3. Crear y añadir el nuevo usuario
+            const newUser = {
+                nombres: formData.nombres,
+                apellidos: formData.apellidos,
+                correo: formData.correo,
+                contrasena: formData.contrasena,
+                // Puedes añadir más campos aquí si es necesario
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            return true; // Éxito
+        } catch (error) {
+            console.error("Error al guardar en localStorage:", error);
+            alert("Hubo un problema al registrar localmente. Intenta más tarde.");
+            return false; // Falla
+        }
+    }
+
+    /**
+     * Redirige al usuario a la página de destino.
+     */
+    redirect() {
+        window.location.href = this.redirectPage;
+    }
+
+    /**
+     * Manejador principal del evento de envío del formulario.
+     */
+    handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = this.getFormData();
+
+        // 1. Validar
+        if (!this.validatePasswords(formData)) {
+            return;
+        }
+
+        // 2. Guardar y verificar éxito
+        if (this.saveUserToLocalStorage(formData)) {
+            // 3. Éxito y redirección
+            alert("Registro exitoso 🎉. Serás redirigido a Iniciar Sesión.");
+            this.form.reset();
+            this.redirect();
+        }
+    }
 }
 
-// ==========================
-// 💻 FRONTEND (Formulario en HTML con Fetch)
-// ==========================
-
-class RegistroAPI {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
-  }
-
-  async registrar(datos) {
-    const response = await fetch(this.baseURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
-    });
-
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.message || "Error al registrar");
-    return result;
-  }
-}
-
-class RegistroForm {
-  constructor(selector) {
-    this.form = document.querySelector(selector);
-    if (!this.form) return;
-
-    this.api = new RegistroAPI("http://localhost:3000/api/registro");
-    this.inicializarEventos();
-  }
-
-  inicializarEventos() {
-    this.form.addEventListener("submit", (e) => this.handleSubmit(e));
-  }
-
-  obtenerDatos() {
-    return {
-      nombres: this.form.querySelector("#nombres").value.trim(),
-      apellidos: this.form.querySelector("#apellidos").value.trim(),
-      telefono: this.form.querySelector("#telefono").value.trim(),
-      emergencia_nombre: this.form.querySelector("#nombre_emergencia").value.trim(),
-      emergencia_apellido: this.form.querySelector("#apellido_emergencia").value.trim(),
-      emergencia_telefono: this.form.querySelector("#telefono_emergencia").value.trim(),
-      ciudad: this.form.querySelector("#ciudad").value.trim(),
-      correo: this.form.querySelector("#correo").value.trim(),
-      contrasena: this.form.querySelector("#contrasena").value.trim(),
-      confirmar: this.form.querySelector("#confirmar").value.trim(),
-    };
-  }
-
-  validarDatos(datos) {
-    if (datos.contrasena !== datos.confirmar) {
-      alert("❌ Las contraseñas no coinciden.");
-      return false;
-    }
-    if (!datos.correo.includes("@")) {
-      alert("❌ El correo no es válido.");
-      return false;
-    }
-    return true;
-  }
-
-  async handleSubmit(e) {
-    e.preventDefault();
-    const datos = this.obtenerDatos();
-    if (!this.validarDatos(datos)) return;
-
-    try {
-      const result = await this.api.registrar(datos);
-      alert("✅ Registro exitoso: " + result.message);
-      this.form.reset();
-    } catch (error) {
-      console.error("Error al registrar:", error);
-      alert("⚠️ Hubo un problema al registrar. Intenta más tarde.");
-    }
-  }
-}
-
-// Inicializar solo si hay DOM disponible (navegador)
-if (typeof document !== "undefined") {
-  document.addEventListener("DOMContentLoaded", () => {
-    new RegistroForm(".registration-form");
-  });
-}
+// Inicialización de la clase al cargar el documento
+document.addEventListener("DOMContentLoaded", () => {
+    // Se crea una instancia de la clase para manejar el formulario de registro
+    const registrationApp = new RegistrationManager(".registration-form", "login.html");
+});
+>>>>>>> 7f2881beb64b207b3c69858a90923396ee864244
