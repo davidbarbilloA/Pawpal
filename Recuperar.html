@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Contraseña | Pawpal</title>
+  <link rel="icon" href="img/logo.ico">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="./styles/recovery.css">
+</head>
+<body class="recovery-body">
+
+  <div class="recovery-container">
+    <img src="img/logo.png" alt="Logo Pawpal" class="recovery-logo" onerror="this.style.display='none'">
+
+    <!-- Paso 1: Solicitar correo/teléfono -->
+    <div id="step1">
+      <h1 class="recovery-title">¿Olvidaste tu contraseña?</h1>
+      <p class="recovery-subtitle">No te preocupes, ingresa tu correo o número de teléfono y te enviaremos un código de verificación.</p>
+
+      <div id="message1" class="message"></div>
+
+      <form id="requestForm">
+        <div class="form-group">
+          <label for="identifier" class="form-label">Correo o número de teléfono</label>
+          <input 
+            type="text" 
+            id="identifier" 
+            name="identifier" 
+            class="form-input" 
+            placeholder="Ej: correo@pawpal.com o +57 3000000000" 
+            required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnRequest">
+          Enviar código
+        </button>
+      </form>
+
+      <div class="back-link">
+        <a href="login.html" class="link">← Volver al inicio de sesión</a>
+      </div>
+    </div>
+
+    <!-- Paso 2: Verificar código -->
+    <div id="step2" class="step-hidden">
+      <h1 class="recovery-title">Verificar código</h1>
+      <p class="recovery-subtitle">Ingresa el código de 6 dígitos que enviamos a <strong id="sentTo"></strong></p>
+
+      <div id="message2" class="message"></div>
+
+      <form id="verifyForm">
+        <div class="code-inputs">
+          <input type="text" maxlength="1" class="code-input" data-index="0" pattern="[0-9]" required>
+          <input type="text" maxlength="1" class="code-input" data-index="1" pattern="[0-9]" required>
+          <input type="text" maxlength="1" class="code-input" data-index="2" pattern="[0-9]" required>
+          <input type="text" maxlength="1" class="code-input" data-index="3" pattern="[0-9]" required>
+          <input type="text" maxlength="1" class="code-input" data-index="4" pattern="[0-9]" required>
+          <input type="text" maxlength="1" class="code-input" data-index="5" pattern="[0-9]" required>
+        </div>
+
+        <div class="timer" id="timer">Código válido por: <strong>5:00</strong></div>
+
+        <button type="submit" class="btn btn-primary" id="btnVerify">
+          Verificar código
+        </button>
+
+        <div class="resend-link">
+          <a href="#" id="resendCode" class="link">Reenviar código</a>
+        </div>
+      </form>
+
+      <div class="back-link">
+        <a href="#" id="backToStep1" class="link">← Cambiar correo/teléfono</a>
+      </div>
+    </div>
+
+    <!-- Paso 3: Nueva contraseña -->
+    <div id="step3" class="step-hidden">
+      <h1 class="recovery-title">Nueva contraseña</h1>
+      <p class="recovery-subtitle">Crea una contraseña segura para tu cuenta.</p>
+
+      <div id="message3" class="message"></div>
+
+      <form id="resetForm">
+        <div class="form-group">
+          <label for="newPassword" class="form-label">Nueva contraseña</label>
+          <input 
+            type="password" 
+            id="newPassword" 
+            name="newPassword" 
+            class="form-input" 
+            placeholder="Mínimo 8 caracteres" 
+            required>
+          <div class="password-requirements">
+            <strong>La contraseña debe contener:</strong>
+            <ul>
+              <li>Al menos 8 caracteres</li>
+              <li>Una letra mayúscula</li>
+              <li>Una letra minúscula</li>
+              <li>Un número</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            name="confirmPassword" 
+            class="form-input" 
+            placeholder="Repite tu contraseña" 
+            required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnReset">
+          Cambiar contraseña
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="js/recovery.js"></script>
+</body>
+</html>
