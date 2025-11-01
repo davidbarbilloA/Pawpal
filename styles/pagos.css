@@ -1,0 +1,77 @@
+.payment-section {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f7fa;
+    padding: 40px 20px;
+}
+
+.payment-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 380px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.payment-card h2 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.payment-card p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #2e7d32;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #2e7d32;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #256528;
+}
+
+#mensaje {
+    margin-top: 15px;
+    color: #2e7d32;
+    font-weight: 600;
+}
