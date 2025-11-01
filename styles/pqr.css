@@ -122,3 +122,47 @@ tr:hover {
     padding: 0.8rem;
   }
 }
+
+/* PQR Admin Portal Styles (Responsividad Mejorada) */
+
+@media (max-width: 768px) {
+  .pqr-main {
+    padding: 1.5rem 1rem; /* Reducir padding general */
+  }
+
+  .pqr-title {
+    font-size: 2rem; /* Título más pequeño */
+  }
+
+  .pqr-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .filtros {
+    flex-direction: column; /* Apilar filtros */
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .filtro-input,
+  .filtro-select {
+    min-width: 100%; /* Usar el ancho completo */
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* La tabla-pqr ya tiene overflow-x: auto, lo cual ayuda en móvil. */
+  table {
+    font-size: 0.85rem;
+    border-radius: 0.5rem;
+  }
+
+  th,
+  td {
+    padding: 0.8rem; /* Reducir padding de celdas */
+  }
+
+  /* Ocultar columnas menos importantes si es necesario (ejemplo) */
+  /* td:nth-child(5), th:nth-child(5) { display: none; } */
+}

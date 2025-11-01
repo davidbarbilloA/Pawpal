@@ -168,3 +168,58 @@ textarea:focus {
     margin-bottom: 15px;
     font-size: 0.9em;
 }
+
+/* registrar_mascota.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+@media (max-width: 768px) {
+    .main-content-form {
+        max-width: 95%; /* Usar casi todo el ancho */
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .step-indicator {
+        margin-bottom: 20px;
+        padding-bottom: 5px;
+        font-size: 0.9em;
+    }
+
+    /* Reducir el tamaño de fuente de los inputs y labels */
+    label {
+        font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    /* Botones de navegación */
+    .form-actions {
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .form-actions button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    /* Grid de fotos: de 4 a 2 columnas */
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 8px;
+    }
+
+    /* Ajustar la foto principal a 1 columna para móvil */
+    .main-photo-placeholder {
+        grid-column: span 1; 
+        padding-top: 100%; /* Volver a proporción cuadrada */
+    }
+}

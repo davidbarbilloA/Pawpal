@@ -303,3 +303,72 @@
     height: 6rem;
   }
 }
+
+/* recovery.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+/* Responsive (Mejora en las media queries existentes) */
+@media (max-width: 768px) {
+  .recovery-body {
+    padding: 1rem;
+  }
+
+  .recovery-container {
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+
+  .recovery-title {
+    font-size: 2rem;
+  }
+
+  .recovery-subtitle {
+    font-size: 1.1rem; /* Más pequeño para mejor legibilidad */
+    margin-bottom: 2rem;
+  }
+
+  .form-label, .form-input, .btn, .message, .timer, .back-link, .resend-link {
+    font-size: 1.2rem; /* Unificar tamaño de fuente */
+  }
+
+  .code-inputs {
+    gap: 0.5rem; /* Reducir el espacio entre los inputs de código */
+    margin-bottom: 1.5rem;
+  }
+
+  .code-input {
+    width: 4rem; /* Reducir el ancho */
+    height: 4.5rem; /* Reducir la altura */
+    font-size: 1.8rem; /* Reducir el tamaño de la fuente del código */
+  }
+
+  .password-requirements {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .recovery-container {
+    padding: 1.5rem;
+  }
+
+  .recovery-title {
+    font-size: 1.6rem;
+  }
+
+  .recovery-subtitle {
+    font-size: 1rem;
+  }
+
+  .code-inputs {
+    gap: 0.4rem;
+  }
+
+  .code-input {
+    width: 3.5rem; /* Mínimo viable */
+    height: 4rem;
+    font-size: 1.6rem;
+  }
+}

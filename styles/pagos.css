@@ -75,3 +75,36 @@ input:focus, select:focus {
     color: #2e7d32;
     font-weight: 600;
 }
+
+/* pagos.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+@media (max-width: 480px) {
+    .payment-section {
+        padding: 20px 10px;
+    }
+
+    .payment-card {
+        width: 100%; /* Ocupar todo el ancho disponible */
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .payment-card h2 {
+        font-size: 1.6rem;
+    }
+
+    .payment-card p {
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    input, select {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

@@ -126,4 +126,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Se crea una instancia de la clase para manejar el formulario de registro
     const registrationApp = new RegistrationManager(".registration-form", "login.html");
 });
->>>>>>> 7f2881beb64b207b3c69858a90923396ee864244

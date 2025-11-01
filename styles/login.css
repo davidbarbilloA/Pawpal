@@ -91,4 +91,43 @@
   text-decoration: underline;
 }
 
-/*fin saha's
+
+/* login.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+@media (max-width: 480px) {
+  .login-body {
+    padding: 1rem;
+    align-items: flex-start; /* Centrar en la parte superior en móviles */
+  }
+    
+  .login-container {
+    padding: 1.5rem; /* Menos padding */
+    margin-top: 4rem; /* Dar un poco de espacio desde arriba */
+    border-radius: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-logo {
+    width: 60px; /* Logo más pequeño */
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .form-input {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}

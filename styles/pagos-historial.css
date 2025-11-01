@@ -64,3 +64,45 @@ tbody tr:nth-child(even) {
 .btn-clear:hover {
     background-color: #b71c1c;
 }
+
+/* pagos-historial.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+@media (max-width: 600px) {
+    .payment-history-section {
+        padding: 20px 10px;
+    }
+
+    .history-card {
+        padding: 20px;
+        border-radius: 12px;
+        width: 100%;
+    }
+    
+    .history-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .history-card p {
+        font-size: 14px;
+    }
+
+    /* Tabla responsiva: Scroll horizontal en pantallas pequeñas */
+    .table-container { 
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 500px; /* Asegurar que la tabla no se colapse */
+    }
+
+    th, td {
+        padding: 8px; /* Menos padding en celdas */
+        font-size: 0.9rem;
+    }
+}
+
+/* Nota: Envuelve tu tabla HTML en un div con la clase 'table-container' para el scroll: 
+    <div class="table-container"><table>...</table></div>
+*/

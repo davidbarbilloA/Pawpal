@@ -91,3 +91,45 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* registro.css (Responsividad Mejorada) */
+
+/* ... (código existente) ... */
+
+@media (max-width: 768px) {
+    .main-header {
+        padding: 2rem;
+    }
+
+    .logo-center img {
+        height: 8rem; /* Logo más pequeño */
+    }
+    
+    .main-content {
+        padding: 1rem;
+    }
+
+    .form-container {
+        padding: 1.5rem 1rem; /* Reducir el padding interno */
+        max-width: 100%; /* Usar el ancho completo en móvil */
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+    
+    .form-group input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .register-button {
+        width: 50%; /* Botón más grande */
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
