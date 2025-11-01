@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPal - Revisión de Cuidadores</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/styles.css"> 
+    
+    <link rel="stylesheet" href="styles/admin_revision.css"> 
+    
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="PawPal Logo">
+                </a>
+                <nav class="main-menu">
+                    <a href="#">Panel de Control</a>
+                    <a href="#">Reportes</a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <div class="ubicacion">
+                    <span class="location-text">Administración</span>
+                </div>
+                <div class="auth-bottons">
+                    <a href="login.html" class="btn btn-login">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content-admin">
+        <h1>Centro de Revisión de Cuidadores 🛡️</h1>
+
+        <div id="filter-controls">
+            <label for="status-filter">Filtrar por Estado:</label>
+            <select id="status-filter">
+                <option value="pending">Pendientes de Revisión</option>
+                <option value="approved">Aprobados</option>
+                <option value="rejected">Rechazados</option>
+                <option value="all">Todos</option>
+            </select>
+        </div>
+
+        <section id="profile-list-section">
+            <h2>Perfiles Pendientes</h2>
+            <table id="profile-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Registro</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="profiles-tbody">
+                    <tr><td colspan="5" class="loading-message">Cargando perfiles...</td></tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="detail-view" class="hidden">
+            <button id="back-to-list" class="btn btn-secondary">← Volver a la Lista</button>
+            <h2 id="detail-name">Perfil de: [Nombre del Cuidador]</h2>
+            
+            <div class="profile-details">
+                <h3>Datos Personales</h3>
+                <p id="detail-personal"></p>
+
+                <h3>Experiencia y Certificaciones</h3>
+                <p id="detail-experience"></p>
+
+                <h3>Referencias</h3>
+                <p id="detail-references"></p>
+            </div>
+
+            <div class="revision-actions">
+                <button id="approve-btn" class="btn btn-approve">✅ Aprobar Perfil</button>
+                <button id="reject-btn" class="btn btn-reject">❌ Rechazar Perfil</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="reject-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Motivo del Rechazo</h3>
+            <p>El motivo será enviado por correo al cuidador.</p>
+            <textarea id="rejection-reason" rows="5" placeholder="Escribe el motivo del rechazo aquí (ej: Falta adjuntar certificado de antecedentes, experiencia no verificable)."></textarea>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn btn-secondary">Cancelar</button>
+                <button id="modal-send-btn" class="btn btn-reject">Enviar Rechazo</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-columns">
+                <div class="footer-col footer-col-info">
+                    <div class="logo-footer">
+                        <img src="img/logo.png" alt="PawPal Logo" class="footer-logo-img">
+                    </div>
+                    <p class="slogan-text">Conectando mascotas con los mejores <br>cuidadores en Medellín.</p>
+                </div>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">&copy; 2025 PawPal Medellín | Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/admin_logic.js"></script>
+</body>
+</html>

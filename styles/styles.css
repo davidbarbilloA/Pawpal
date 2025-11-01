@@ -19,17 +19,21 @@
 
 html {
     box-sizing: border-box;
-    font-size: 62.5%; 
+    font-size: 120.5%; 
 }
 
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
-body{
-    margin: 0;
-    font-family: var(--font-family);
-    color: var(--text-color);
+body {
+    /* (Asegúrate de que tus fuentes están aquí) */
+    font-family: 'Open Sans', sans-serif; 
+    
+    /* ESTO ES CLAVE: Define el tamaño de fuente base */
+    font-size: 16px; 
+    line-height: 1.6;
+    color: #333;
 }
 
 /* header */

@@ -1,0 +1,170 @@
+/* =================================================== */
+/* ESTILOS ESPECÍFICOS PARA EL FORMULARIO MULTI-PASO (REGISTRO DE MASCOTA) */
+/* =================================================== */
+
+.main-content-form {
+    max-width: 800px; /* Ancho máximo para centrar el formulario */
+    margin: 50px auto; /* Centrar horizontalmente */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* --------------------------------------------------- */
+/* CONTROL DE PASOS (CRUCIAL PARA EL JS) */
+/* --------------------------------------------------- */
+
+/* Oculta todos los pasos por defecto */
+.form-step {
+    display: none; 
+    padding: 20px 0;
+}
+
+/* Muestra solo el paso que tiene la clase 'active' */
+.form-step.active {
+    display: block;
+}
+
+/* --------------------------------------------------- */
+/* INDICADOR DE PASOS */
+/* --------------------------------------------------- */
+
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; /* Línea separadora */
+    padding-bottom: 10px;
+}
+
+.step {
+    padding: 5px 10px;
+    color: #888;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: color 0.3s;
+    cursor: default; /* Indica que no es un enlace clickable (la navegación es con botones) */
+}
+
+.step.active {
+    color: #007bff; /* Color primario de la aplicación */
+    border-bottom: 3px solid #007bff;
+}
+
+/* --------------------------------------------------- */
+/* ESTILOS DE FORMULARIO E INPUTS */
+/* --------------------------------------------------- */
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Estilos de inputs básicos (mejora visual) */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que padding no aumente el ancho */
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #007bff; /* Resalta el campo activo */
+    outline: none;
+}
+
+/* --------------------------------------------------- */
+/* BOTONES DE NAVEGACIÓN */
+/* --------------------------------------------------- */
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-prev {
+    background-color: #6c757d; /* Gris para "Anterior" */
+    color: white;
+}
+
+.btn-next, .btn-submit {
+    background-color: #007bff; /* Azul primario para "Siguiente/Enviar" */
+    color: white;
+}
+
+.btn-upload {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #28a745; /* Verde para la carga de archivos */
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+/* --------------------------------------------------- */
+/* ESTILOS ESPECÍFICOS DE SECCIONES */
+/* --------------------------------------------------- */
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas de miniaturas */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.photo-placeholder {
+    width: 100%;
+    padding-top: 100%; /* Crea una proporción cuadrada */
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-photo-placeholder {
+    grid-column: span 2; /* La foto principal ocupa 2 columnas */
+    padding-top: 50%; 
+}
+
+.placeholder-text {
+    position: absolute;
+    color: #999;
+    font-size: 0.9em;
+}
+
+.validation-error {
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
